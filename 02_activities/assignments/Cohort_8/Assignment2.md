@@ -54,7 +54,9 @@ The store wants to keep customer addresses. Propose two architectures for the CU
 **HINT:** search type 1 vs type 2 slowly changing dimensions. 
 
 ```
-Your answer...
+For type 1 customer_address table that will overwrite changes, the table will have as attributes: customer_ID as PK, customer_address, postal_code, city, province, country. whenever the customer move to a new address, the customer_ID will stay the same, and the values in the other attributes will change based on the new address, meaning for each customer there is one unique address which is the most current one. In this architecture, the size of the table stay fixed for a specific number of customers.
+
+For type 2 customer_address table that will retain changes, the table will have as attributes: customer_ID (CK), customer_address (CK), start_date, finish_date, is_curent (1 if current, 0 if not),postal_code, city, province, country. This architecture will allow to record all address changes for each customer throughout the time. when a customer change address, a new row is created, with new values, and the row containing the old address will change (finish_date=the date of moving, is_current= change from 1 to 0). The size of the table is variable and increase for each change in the address.
 ```
 
 ***
